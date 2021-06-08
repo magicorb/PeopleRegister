@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PeopleRegister.Model\PeopleRegister.Model.csproj" />
+    <ProjectReference Include="..\PeopleRegister.Persistence.Interface\PeopleRegister.Persistence.Interface.csproj" />
+  </ItemGroup>
+
 </Project>

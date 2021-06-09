@@ -6,13 +6,20 @@ namespace PeopleRegister.Model
 {
 	public class PersonSnapshot
 	{
-		public PersonSnapshot(Guid id, string firstName, string lastName, string dateOfBirth, string profession)
+		public PersonSnapshot(
+			Guid id,
+			string firstName,
+			string lastName,
+			string dateOfBirth,
+			string profession,
+			int updateNumber)
 		{
 			Id = id;
 			FirstName = firstName;
 			LastName = lastName;
 			DateOfBirth = dateOfBirth;
 			Profession = profession;
+			UpdateNumber = updateNumber;
 		}
 
 		public Guid Id { get; }
@@ -25,6 +32,8 @@ namespace PeopleRegister.Model
 
 		public string Profession { get; }
 
+		public int UpdateNumber { get; }
+
 		public Person ToPerson()
 			=> new Person()
 			{
@@ -35,13 +44,14 @@ namespace PeopleRegister.Model
 				Profession = Profession
 			};
 
-		public static PersonSnapshot FromPerson(Person person)
+		public static PersonSnapshot FromPerson(Person person, int updateNumber)
 			=> new PersonSnapshot(
 				person.Id,
 				person.FirstName,
 				person.LastName,
 				person.DateOfBirth,
-				person.Profession
+				person.Profession,
+				updateNumber
 			);
 	}
 }

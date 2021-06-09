@@ -6,4 +6,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PeopleRegister.Model\PeopleRegister.Model.csproj" />
+    <ProjectReference Include="..\PeopleRegister.Persistence.InMemory\PeopleRegister.Persistence.InMemory.csproj" />
+    <ProjectReference Include="..\PeopleRegister.Persistence.Interface\PeopleRegister.Persistence.Interface.csproj" />
+  </ItemGroup>
+
 </Project>

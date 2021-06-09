@@ -14,6 +14,8 @@ namespace PeopleRegister.Persistence.Interface
 
 		Task DeletePersonAsync(Person person);
 
+		Task<IEnumerable<PersonSnapshot>> GetPersonsAsync();
+
 		event EventHandler<PersonSnapshot> PersonAdded;
 
 		event EventHandler<PersonSnapshot> PersonUpdated;

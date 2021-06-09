@@ -4,6 +4,7 @@ using PeopleRegister.Client.PersonList;
 using PeopleRegister.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,8 @@ namespace PeopleRegister.Client
 		{
 			PersonList = personList;
 			PersonDetails = personDetails;
+
+			PersonList.PropertyChanged += PersonList_PropertyChanged;
 		}
 
 		public PersonListViewModel PersonList { get; }
@@ -26,6 +29,12 @@ namespace PeopleRegister.Client
 		public async Task InitializeAsync()
 		{
 			await PersonList.InitializeAsync();
+		}
+
+		private void PersonList_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(PersonList.SelectedPerson))
+				PersonDetails.Reload(PersonList.SelectedPerson.Person.Clone());
 		}
 	}
 }

@@ -15,5 +15,15 @@ namespace PeopleRegister.Model
 		public string DateOfBirth { get; set; }
 
 		public string Profession { get; set; }
+
+		public Person Clone()
+			=> new Person()
+			{
+				Id = Id,
+				FirstName = FirstName,
+				LastName = LastName,
+				DateOfBirth = DateOfBirth,
+				Profession = Profession
+			};
 	}
 }

@@ -1,7 +1,40 @@
 ﻿<UserControl x:Class="PeopleRegister.Client.PersonDetails.PersonDetailsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-            
-    </Grid>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<TextBlock
+			Grid.Row="0" Grid.Column="0"
+			Text="First Name"/>
+		<TextBox
+			Grid.Row="0" Grid.Column="1"
+			Text="{Binding FirstName}"/>
+		<TextBlock
+			Grid.Row="1" Grid.Column="0"
+			Text="Last Name"/>
+		<TextBox
+			Grid.Row="1" Grid.Column="1"
+			Text="{Binding LastName}"/>
+		<TextBlock
+			Grid.Row="2" Grid.Column="0"
+			Text="Date Of Birth"/>
+		<TextBox
+			Grid.Row="2" Grid.Column="1"
+			Text="{Binding DateOfBirth}"/>
+		<TextBlock
+			Grid.Row="3" Grid.Column="0"
+			Text="Profession"/>
+		<TextBox
+			Grid.Row="3" Grid.Column="1"
+			Text="{Binding Profession}"/>
+	</Grid>
 </UserControl>

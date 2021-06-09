@@ -31,7 +31,7 @@ namespace PeopleRegister.Client.PersonList
 
 		public PersonListItemViewModel SelectedPerson
 		{
-			get => SelectedPerson;
+			get => _selectedPerson;
 			set => SetProperty(ref _selectedPerson, value);
 		}
 

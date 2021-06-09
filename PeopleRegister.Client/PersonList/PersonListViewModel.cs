@@ -8,10 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using PeopleRegister.Client.Helpers;
 
 namespace PeopleRegister.Client.PersonList
 {
-	public class PersonListViewModel : ViewModelBase
+	public class PersonListViewModel : ViewModelBase, IDisposable
 	{
 		private readonly IRepository _repository;
 		private readonly IDispatcher _dispatcher;
@@ -38,11 +39,20 @@ namespace PeopleRegister.Client.PersonList
 		public async Task InitializeAsync()
 		{
 			_repository.PersonAdded += Repository_PersonAdded;
+			_repository.PersonDeleted += Repository_PersonDeleted;
+			_repository.PersonUpdated += Repository_PersonUpdated;
 
 			var persons = await _repository.GetPersonsAsync();
 
 			foreach (var person in persons)
-				Persons.Add(new PersonListItemViewModel(person));
+				TryAddPerson(person);
+		}
+
+		public void Dispose()
+		{
+			_repository.PersonAdded -= Repository_PersonAdded;
+			_repository.PersonDeleted -= Repository_PersonDeleted;
+			_repository.PersonUpdated -= Repository_PersonUpdated;
 		}
 
 		private void Repository_PersonAdded(object sender, PersonSnapshot e)
@@ -50,13 +60,29 @@ namespace PeopleRegister.Client.PersonList
 
 		private void TryAddPerson(PersonSnapshot snapshot)
 		{
-			if (IsStale(snapshot))
-				return;
+			var isStale = Persons.Any(vm
+				=> vm.Person.Id == snapshot.Id && vm.UpdateNumber >= snapshot.UpdateNumber);
 
-			Persons.Add(new PersonListItemViewModel(snapshot));
+			if (!isStale)
+				Persons.Add(new PersonListItemViewModel(snapshot));
 		}
 
-		private bool IsStale(PersonSnapshot snapshot)
-			=> Persons.Any(p => p.Person.Id == snapshot.Id && p.UpdateNumber >= snapshot.UpdateNumber);
+		private void Repository_PersonDeleted(object sender, PersonSnapshot e)
+			=> _dispatcher.BeginInvoke(() =>
+			{
+				var index = Persons.IndexOf(vm => vm.Person.Id == e.Id);
+
+				if (index != -1)
+					Persons.RemoveAt(index);
+			});
+
+		private void Repository_PersonUpdated(object sender, PersonSnapshot e)
+			=> _dispatcher.BeginInvoke(() =>
+			{
+				var item = Persons.FirstOrDefault(vm => vm.Person.Id == e.Id);
+
+				if (item != null && item.UpdateNumber < e.UpdateNumber)
+					item.Reload(e);
+			});
 	}
 }

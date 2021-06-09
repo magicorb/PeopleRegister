@@ -5,7 +5,7 @@
 		xmlns:personDetails="clr-namespace:PeopleRegister.Client.PersonDetails"
 		Title="MainWindow"
 		Width="1000" Height="600"
-		Loaded="Window_Loaded">
+		Loaded="Window_Loaded" Unloaded="Window_Unloaded">
     <Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition/>

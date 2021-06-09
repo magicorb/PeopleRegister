@@ -11,30 +11,44 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
+		
 		<TextBlock
 			Grid.Row="0" Grid.Column="0"
 			Text="First Name"/>
 		<TextBox
 			Grid.Row="0" Grid.Column="1"
-			Text="{Binding FirstName}"/>
+			Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+		
 		<TextBlock
 			Grid.Row="1" Grid.Column="0"
 			Text="Last Name"/>
 		<TextBox
 			Grid.Row="1" Grid.Column="1"
-			Text="{Binding LastName}"/>
+			Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
+		
 		<TextBlock
 			Grid.Row="2" Grid.Column="0"
 			Text="Date Of Birth"/>
 		<TextBox
 			Grid.Row="2" Grid.Column="1"
-			Text="{Binding DateOfBirth}"/>
+			Text="{Binding DateOfBirth, UpdateSourceTrigger=PropertyChanged}"/>
+		
 		<TextBlock
 			Grid.Row="3" Grid.Column="0"
 			Text="Profession"/>
 		<TextBox
 			Grid.Row="3" Grid.Column="1"
-			Text="{Binding Profession}"/>
+			Text="{Binding Profession, UpdateSourceTrigger=PropertyChanged}"/>
+
+		<Button
+			Grid.Row="4" Grid.Column="0"
+			Content="Submit"
+			Command="{Binding SubmitCommand}"/>
+		<Button
+			Grid.Row="4" Grid.Column="1"
+			Content="Delete"
+			Command="{Binding DeleteCommand}"/>
 	</Grid>
 </UserControl>

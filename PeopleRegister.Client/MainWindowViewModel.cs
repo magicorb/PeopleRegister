@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PeopleRegister.Client
 {
-	public class MainWindowViewModel : ViewModelBase
+	public class MainWindowViewModel : ViewModelBase, IDisposable
 	{
 		public MainWindowViewModel(
 			PersonListViewModel personList,
@@ -31,10 +31,18 @@ namespace PeopleRegister.Client
 			await PersonList.InitializeAsync();
 		}
 
+		public void Dispose()
+			=> PersonList.Dispose();
+
 		private void PersonList_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == nameof(PersonList.SelectedPerson))
-				PersonDetails.Reload(PersonList.SelectedPerson.Person.Clone());
+			{
+				if (PersonList.SelectedPerson != null)
+					PersonDetails.Reload(PersonList.SelectedPerson.Person.Clone());
+				else
+					PersonDetails.Reset();
+			}
 		}
 	}
 }

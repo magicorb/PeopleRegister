@@ -45,5 +45,10 @@ namespace PeopleRegister.Client
 		{
 			await _viewModel.InitializeAsync();
 		}
+
+		private void Window_Unloaded(object sender, RoutedEventArgs e)
+		{
+			_viewModel.Dispose();
+		}
 	}
 }

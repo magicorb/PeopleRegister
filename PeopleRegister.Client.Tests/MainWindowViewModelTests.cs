@@ -32,10 +32,34 @@ namespace PeopleRegister.Client.Tests
 			await sut.InitializeAsync();
 
 			PersonAssert.AreEqual(new Person(), detailsViewModel.Person);
+			Assert.IsTrue(detailsViewModel.IsNew);
 
 			listViewModel.SelectedPerson = listViewModel.Persons[1];
 
 			PersonAssert.AreEqual(listViewModel.Persons[1].Person, detailsViewModel.Person);
+			Assert.IsFalse(detailsViewModel.IsNew);
+		}
+
+		[Test]
+		public async Task Requesting_add_person_resets_details()
+		{
+			var person = new PersonSnapshot(Guid.NewGuid(), "John", "Doe", "30.01.1900", "Programmer", 1);
+
+			var repositoryMock = RepositoryMockFactory.CreateRepositoryMock(person);
+			var dispatcherMock = DispatcherMockFactory.CreateSynchronousDispatcherMock();
+
+			var listViewModel = new PersonListViewModel(repositoryMock.Object, dispatcherMock.Object);
+			var detailsViewModel = new PersonDetailsViewModel(repositoryMock.Object);
+
+			var sut = new MainWindowViewModel(listViewModel, detailsViewModel);
+			await sut.InitializeAsync();
+
+			listViewModel.SelectedPerson = listViewModel.Persons[0];
+
+			listViewModel.AddPersonCommand.Execute(null);
+
+			PersonAssert.AreEqual(new Person(), detailsViewModel.Person);
+			Assert.IsTrue(detailsViewModel.IsNew);
 		}
 	}
 }

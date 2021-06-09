@@ -89,7 +89,7 @@ namespace PeopleRegister.Client.PersonDetails
 		}
 
 		public string SubmitButtonText
-			=> IsNew ? "Submit New" : "Submit Changes";
+			=> IsNew ? Localization.SubmitNew : Localization.SubmitChanges;
 
 		public void Load(Person person)
 		{
@@ -122,7 +122,7 @@ namespace PeopleRegister.Client.PersonDetails
 			else
 				await _repository.UpdatePersonAsync(Person);
 
-			HasChanges = false;
+			Load(Person);
 		}
 
 		private bool CanSubmit()

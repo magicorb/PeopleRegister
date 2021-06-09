@@ -57,6 +57,6 @@ namespace PeopleRegister.Client.PersonList
 		}
 
 		private bool IsStale(PersonSnapshot snapshot)
-			=> Persons.Any(p => p.Person.Id == snapshot.Id && p.UpdateNumber > snapshot.UpdateNumber);
+			=> Persons.Any(p => p.Person.Id == snapshot.Id && p.UpdateNumber >= snapshot.UpdateNumber);
 	}
 }

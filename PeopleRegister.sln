@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleRegister.Client", "PeopleRegister.Client\PeopleRegister.Client.csproj", "{FA6666C6-E662-43F2-9459-4B58D36F472B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeopleRegister.Client", "PeopleRegister.Client\PeopleRegister.Client.csproj", "{FA6666C6-E662-43F2-9459-4B58D36F472B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleRegister.Persistence.Interface", "PeopleRegister.Persistence.Interface\PeopleRegister.Persistence.Interface.csproj", "{4D04638B-86B3-4E49-8391-B705A43A1887}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeopleRegister.Persistence.Interface", "PeopleRegister.Persistence.Interface\PeopleRegister.Persistence.Interface.csproj", "{4D04638B-86B3-4E49-8391-B705A43A1887}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleRegister.Persistence.InMemory", "PeopleRegister.Persistence.InMemory\PeopleRegister.Persistence.InMemory.csproj", "{D479F3D5-52B3-4261-917B-4AF24ACC3CBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeopleRegister.Persistence.InMemory", "PeopleRegister.Persistence.InMemory\PeopleRegister.Persistence.InMemory.csproj", "{D479F3D5-52B3-4261-917B-4AF24ACC3CBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleRegister.Model", "PeopleRegister.Model\PeopleRegister.Model.csproj", "{415C6748-74B1-46AC-9694-28A8BCE43FDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeopleRegister.Model", "PeopleRegister.Model\PeopleRegister.Model.csproj", "{415C6748-74B1-46AC-9694-28A8BCE43FDD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeopleRegister.Client.Tests", "PeopleRegister.Client.Tests\PeopleRegister.Client.Tests.csproj", "{641767EA-0615-475C-A325-E743F6B52C6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{415C6748-74B1-46AC-9694-28A8BCE43FDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{415C6748-74B1-46AC-9694-28A8BCE43FDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{415C6748-74B1-46AC-9694-28A8BCE43FDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{641767EA-0615-475C-A325-E743F6B52C6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{641767EA-0615-475C-A325-E743F6B52C6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{641767EA-0615-475C-A325-E743F6B52C6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{641767EA-0615-475C-A325-E743F6B52C6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

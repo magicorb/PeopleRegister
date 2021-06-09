@@ -63,6 +63,57 @@ namespace PeopleRegister.Client.Tests
 		}
 
 		[Test]
+		public async Task Items_are_updated_when_person_is_updated_in_repository()
+		{
+			var person1 = new PersonSnapshot(Guid.NewGuid(), "John", "Doe", "30.01.1900", "Programmer", 1);
+			var person2 = new PersonSnapshot(Guid.NewGuid(), "Mary", "Smith", "28.02.1901", "Analyst", 2);
+
+			var repositoryMock = RepositoryMockFactory.CreateRepositoryMock(person1, person2);
+			var dispatcherMock = DispatcherMockFactory.CreateSynchronousDispatcherMock();
+
+			var sut = new PersonListViewModel(repositoryMock.Object, dispatcherMock.Object);
+
+			await sut.InitializeAsync();
+
+			var updatePerson2 = new PersonSnapshot(person2.Id, "Jane", "Jones", "28.01.1902", "Project Manager", 3);
+
+			repositoryMock.Raise(r => r.PersonUpdated += null, repositoryMock.Object, updatePerson2);
+
+			var expectedPersons = new[] { person1.ToPerson(), updatePerson2.ToPerson() };
+			var populatedPersons = sut.Persons.Select(vm => vm.Person);
+
+			PersonAssert.AreEquivalentLists(expectedPersons, populatedPersons);
+
+			dispatcherMock.Verify(d => d.BeginInvoke(It.IsAny<Action>()), Times.Once());
+		}
+
+		[Test]
+		public async Task Items_are_updated_when_person_is_deleted_from_repository()
+		{
+			var persons = new PersonSnapshot[]
+			{
+				new PersonSnapshot(Guid.NewGuid(), "John", "Doe", "30.01.1900", "Programmer", 1),
+				new PersonSnapshot(Guid.NewGuid(), "Mary", "Smith", "28.02.1901", "Analyst", 2)
+			};
+
+			var repositoryMock = RepositoryMockFactory.CreateRepositoryMock(persons);
+			var dispatcherMock = DispatcherMockFactory.CreateSynchronousDispatcherMock();
+
+			var sut = new PersonListViewModel(repositoryMock.Object, dispatcherMock.Object);
+
+			await sut.InitializeAsync();
+
+			repositoryMock.Raise(r => r.PersonDeleted += null, repositoryMock.Object, persons[1]);
+
+			var expectedPersons = new[] { persons[0].ToPerson() };
+			var populatedPersons = sut.Persons.Select(vm => vm.Person);
+
+			PersonAssert.AreEquivalentLists(expectedPersons, populatedPersons);
+
+			dispatcherMock.Verify(d => d.BeginInvoke(It.IsAny<Action>()), Times.Once());
+		}
+
+		[Test]
 		public async Task Stale_person_added_events_are_ignored()
 		{
 			var person = new PersonSnapshot(Guid.NewGuid(), "John", "Doe", "30.01.1900", "Programmer", 1);

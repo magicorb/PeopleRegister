@@ -49,6 +49,7 @@ namespace PeopleRegister.Client
 		private void Window_Unloaded(object sender, RoutedEventArgs e)
 		{
 			_viewModel.Dispose();
+			_viewModel.PersonList.Dispose();
 		}
 	}
 }

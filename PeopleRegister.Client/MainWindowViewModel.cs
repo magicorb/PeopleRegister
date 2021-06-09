@@ -50,6 +50,9 @@ namespace PeopleRegister.Client
 		}
 
 		public void Dispose()
-			=> PersonList.Dispose();
+		{
+			PersonList.PropertyChanged -= PersonList_PropertyChanged;
+			PersonList.AddPersonRequested -= PersonList_AddPersonRequested;
+		}
 	}
 }

@@ -24,6 +24,8 @@ namespace PeopleRegister.Client.PersonList
 			Persons = new ObservableCollection<PersonListItemViewModel>();
 			_repository = repository;
 			_dispatcher = dispatcher;
+
+			AddPersonCommand = new DelegateCommand(ExecuteAddPerson);
 		}
 
 		public ObservableCollection<PersonListItemViewModel> Persons { get; }
@@ -35,6 +37,10 @@ namespace PeopleRegister.Client.PersonList
 			get => _selectedPerson;
 			set => SetProperty(ref _selectedPerson, value);
 		}
+
+		public DelegateCommand AddPersonCommand { get; }
+
+		public EventHandler AddPersonRequested;
 
 		public async Task InitializeAsync()
 		{
@@ -84,5 +90,11 @@ namespace PeopleRegister.Client.PersonList
 				if (item != null && item.UpdateNumber < e.UpdateNumber)
 					item.Reload(e);
 			});
+
+		private void ExecuteAddPerson()
+		{
+			SelectedPerson = null;
+			AddPersonRequested?.Invoke(this, EventArgs.Empty);
+		}
 	}
 }

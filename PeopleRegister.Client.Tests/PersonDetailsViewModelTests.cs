@@ -21,7 +21,7 @@ namespace PeopleRegister.Client.Tests
 			var repositoryMock = new Mock<IRepository>();
 
 			var sut = new PersonDetailsViewModel(repositoryMock.Object);
-			sut.Reload(person);
+			sut.Load(person);
 
 			sut.SubmitCommand.Execute(null);
 
@@ -53,7 +53,7 @@ namespace PeopleRegister.Client.Tests
 			var repositoryMock = new Mock<IRepository>();
 
 			var sut = new PersonDetailsViewModel(repositoryMock.Object);
-			sut.Reload(person);
+			sut.Load(person);
 
 			sut.DeleteCommand.Execute(null);
 
@@ -71,7 +71,7 @@ namespace PeopleRegister.Client.Tests
 
 			Assert.IsFalse(sut.DeleteCommand.CanExecute(null));
 
-			sut.Reload(new Person());
+			sut.Load(new Person());
 
 			Assert.IsTrue(isCanExecuteChanged);
 			Assert.IsTrue(sut.DeleteCommand.CanExecute(null));
@@ -85,7 +85,7 @@ namespace PeopleRegister.Client.Tests
 			var sut = new PersonDetailsViewModel(repositoryMock.Object);
 
 			var person = new Person();
-			sut.Reload(person);
+			sut.Load(person);
 
 			sut.DeleteCommand.Execute(null);
 

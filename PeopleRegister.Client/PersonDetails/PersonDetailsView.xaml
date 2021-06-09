@@ -44,7 +44,7 @@
 
 		<Button
 			Grid.Row="4" Grid.Column="0"
-			Content="Submit"
+			Content="{Binding SubmitButtonText}"
 			Command="{Binding SubmitCommand}"/>
 		<Button
 			Grid.Row="4" Grid.Column="1"

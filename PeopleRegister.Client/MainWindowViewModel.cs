@@ -20,6 +20,7 @@ namespace PeopleRegister.Client
 			PersonDetails = personDetails;
 
 			PersonList.PropertyChanged += PersonList_PropertyChanged;
+			PersonList.AddPersonRequested += PersonList_AddPersonRequested;
 		}
 
 		public PersonListViewModel PersonList { get; }
@@ -31,18 +32,24 @@ namespace PeopleRegister.Client
 			await PersonList.InitializeAsync();
 		}
 
-		public void Dispose()
-			=> PersonList.Dispose();
-
 		private void PersonList_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == nameof(PersonList.SelectedPerson))
 			{
 				if (PersonList.SelectedPerson != null)
-					PersonDetails.Reload(PersonList.SelectedPerson.Person.Clone());
-				else
+					PersonDetails.Load(PersonList.SelectedPerson.Person.Clone());
+				else if (!PersonDetails.IsNew)
 					PersonDetails.Reset();
 			}
 		}
+
+		private void PersonList_AddPersonRequested(object sender, EventArgs e)
+		{
+			PersonDetails.Reset();
+			PersonList.SelectedPerson = null;
+		}
+
+		public void Dispose()
+			=> PersonList.Dispose();
 	}
 }

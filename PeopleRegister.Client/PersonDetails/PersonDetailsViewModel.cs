@@ -10,18 +10,16 @@ namespace PeopleRegister.Client.PersonDetails
 {
 	public class PersonDetailsViewModel : ViewModelBase
 	{
-		private static readonly Person EmptyPerson = new Person();
-
 		private readonly IRepository _repository;
 
 		public PersonDetailsViewModel(IRepository repository)
 		{
 			_repository = repository;
 
-			Person = EmptyPerson;
-
 			SubmitCommand = new DelegateCommand(async () => await ExecuteSubmitAsync(), CanSubmit);
 			DeleteCommand = new DelegateCommand(async () => await ExecuteDeleteAsync(), CanDelete);
+
+			Reset();
 		}
 
 		public Person Person { get; private set; }
@@ -75,11 +73,7 @@ namespace PeopleRegister.Client.PersonDetails
 		public bool IsNew
 		{
 			get => _isNew;
-			set
-			{
-				SetProperty(ref _isNew, value);
-				DeleteCommand.RaiseCanExecuteChanged();
-			}
+			private set => SetProperty(ref _isNew, value);
 		}
 
 		private bool _hasChanges;
@@ -94,17 +88,28 @@ namespace PeopleRegister.Client.PersonDetails
 			}
 		}
 
-		public void Reload(Person person)
+		public string SubmitButtonText
+			=> IsNew ? "Submit New" : "Submit Changes";
+
+		public void Load(Person person)
 		{
 			Person = person;
+			HasChanges = false;
+			IsNew = false;
 
 			RaisePropertyChanged(string.Empty);
 			DeleteCommand.RaiseCanExecuteChanged();
-			HasChanges = false;
 		}
 
 		public void Reset()
-			=> Reload(EmptyPerson);
+		{
+			Person = new Person();
+			HasChanges = false;
+			IsNew = true;
+
+			RaisePropertyChanged(string.Empty);
+			DeleteCommand.RaiseCanExecuteChanged();
+		}
 
 		public DelegateCommand SubmitCommand { get; }
 
@@ -127,10 +132,10 @@ namespace PeopleRegister.Client.PersonDetails
 		{
 			await _repository.DeletePersonAsync(Person);
 
-			Person = EmptyPerson;
+			Reset();
 		}
 
 		private bool CanDelete()
-			=> !IsNew && Person != EmptyPerson;
+			=> !IsNew;
 	}
 }

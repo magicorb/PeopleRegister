@@ -27,18 +27,11 @@ namespace PeopleRegister.Client
 	{
 		private MainWindowViewModel _viewModel;
 
-		public MainWindow()
+		public MainWindow(MainWindowViewModel viewModel)
 		{
 			InitializeComponent();
 
-			var repository = new Repository();
-			repository.AddPersonAsync(new Person() { FirstName = "John", LastName = "Doe", DateOfBirth = "30.01.1900", Profession = "Programmer" });
-			repository.AddPersonAsync(new Person() { FirstName = "Mary", LastName = "Smith", DateOfBirth = "28.02.1901", Profession = "Analyst" });
-
-
-			DataContext = _viewModel = new MainWindowViewModel(
-				new PersonListViewModel(repository, new UiDispatcher()),
-				new PersonDetailsViewModel(repository));
+			DataContext = _viewModel = viewModel;
 		}
 
 		private async void Window_Loaded(object sender, RoutedEventArgs e)
